@@ -1,7 +1,6 @@
 package cool.muyucloud.housing.controller;
 
 import cool.muyucloud.housing.entity.Estate;
-import cool.muyucloud.housing.entity.Favourite;
 import cool.muyucloud.housing.entity.User;
 import cool.muyucloud.housing.service.EstateService;
 import cool.muyucloud.housing.service.FavouriteService;
@@ -13,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -40,9 +39,10 @@ public class ClientController {
         params = {"uid", "pwd"},
         method = RequestMethod.GET
     )
+    @ResponseBody
     public long login(int uid, String pwd) {
         if (this.userService.login(uid, pwd)) {
-            return 0;
+            return 0L;
         } else {
             return this.addAffair(uid);
         }
@@ -53,6 +53,7 @@ public class ClientController {
         params = {"email", "pwd"},
         method = RequestMethod.GET
     )
+    @ResponseBody
     public long login(String email, String pwd) {
         if (!isValidEmail(email)) {
             return 0;
@@ -69,6 +70,7 @@ public class ClientController {
         params = {"name", "email", "pwd"},
         method = RequestMethod.GET
     )
+    @ResponseBody
     public boolean register(String name, String email, String pwd) {
         if (!isValidEmail(email)) {
             return false;
@@ -87,6 +89,7 @@ public class ClientController {
         params = {"code"},
         method = RequestMethod.PUT
     )
+    @ResponseBody
     public Integer verifyRegister(long code) {
         return this.userService.verifyReg(code);
     }
@@ -97,6 +100,7 @@ public class ClientController {
         params = {"uid"},
         method = RequestMethod.GET
     )
+    @ResponseBody
     public boolean resetPwdReq(int uid) {
         Long code = this.userService.resetPwdReq(uid);
         if (code == null) {
@@ -112,6 +116,7 @@ public class ClientController {
         params = {"code", "newPwd"},
         method = RequestMethod.PUT
     )
+    @ResponseBody
     public boolean resetPwd(long code, String newPwd) {
         return this.userService.resetPwd(code, newPwd);
     }
@@ -121,6 +126,7 @@ public class ClientController {
         params = {"token", "uid"},
         method = RequestMethod.GET
     )
+    @ResponseBody
     public boolean deleteUserReq(long token) {
         Integer uid = this.accessAffair(token);
         if (uid == null) {
@@ -140,6 +146,7 @@ public class ClientController {
         params = {"token", "code"},
         method = RequestMethod.DELETE
     )
+    @ResponseBody
     public boolean deleteUser(long token, long code) {
         Integer uid = this.accessAffair(token);
         if (uid == null) {
@@ -158,6 +165,7 @@ public class ClientController {
         params = {"token", "uid", "pwd", "newPwd"},
         method = RequestMethod.PUT
     )
+    @ResponseBody
     public boolean updatePwd(long token, String pwd, String newPwd) {
         Integer uid = this.accessAffair(token);
         if (uid == null) {
@@ -171,6 +179,7 @@ public class ClientController {
         params = {"token", "uid", "type"},
         method = RequestMethod.PUT
     )
+    @ResponseBody
     public boolean updateType(long token, int uid, byte type) {
         Integer opId = this.accessAffair(token);
         // Can not find operator by ID
@@ -197,6 +206,7 @@ public class ClientController {
         params = {"token", "name"},
         method = RequestMethod.PUT
     )
+    @ResponseBody
     public boolean updateName(long token, String name) {
         Integer uid = this.accessAffair(token);
         if (uid == null) {
@@ -210,6 +220,7 @@ public class ClientController {
         params = {"token", "uid"},
         method = RequestMethod.PUT
     )
+    @ResponseBody
     public boolean logout(long token) {
         Integer access = this.accessAffair(token);
         if (access == null) {
@@ -224,6 +235,7 @@ public class ClientController {
         params = {"token"},
         method = RequestMethod.HEAD
     )
+    @ResponseBody
     public boolean keepAlive(long token) {
         return this.accessAffair(token) == null;
     }
@@ -234,6 +246,7 @@ public class ClientController {
         params = {"name"},
         method = RequestMethod.POST
     )
+    @ResponseBody
     public List<User> searchUserByName(String name) {
         return this.userService.find(name);
     }
@@ -243,6 +256,7 @@ public class ClientController {
         params = {"id"},
         method = RequestMethod.POST
     )
+    @ResponseBody
     public User searchUserById(int id) {
         return this.userService.find(id);
     }
@@ -252,6 +266,7 @@ public class ClientController {
         params = {"aid"},
         method = RequestMethod.POST
     )
+    @ResponseBody
     public List<Estate> searchEstate(long aid) {
         return estateService.query(aid);
     }
@@ -261,6 +276,7 @@ public class ClientController {
         params = {"uid"},
         method = RequestMethod.POST
     )
+    @ResponseBody
     public List<Estate> searchEstate(int uid) {
         return estateService.query(uid);
     }
@@ -271,6 +287,7 @@ public class ClientController {
         params = {"token", "aid", "square", "price"},
         method = RequestMethod.PUT
     )
+    @ResponseBody
     public boolean addEstate(long token, long aid, double square, double price) {
         Integer uid = this.accessAffair(token);
         // Token is bad or address ID invalid
@@ -290,6 +307,7 @@ public class ClientController {
         params = {"token", "aid", "price", "square"},
         method = RequestMethod.PUT
     )
+    @ResponseBody
     public boolean updateEstate(long token, long aid, double price, double square) {
         Integer uid = this.accessAffair(token);
         if (uid == null || !isUniqueAid(aid)) {
@@ -313,6 +331,7 @@ public class ClientController {
         params = {"token", "aid"},
         method = RequestMethod.PUT
     )
+    @ResponseBody
     public boolean removeEstate(long token, long aid) {
         Integer uid = this.accessAffair(token);
         if (uid == null || !isUniqueAid(aid)) {
@@ -337,6 +356,7 @@ public class ClientController {
         params = {"token", "aid"},
         method = RequestMethod.PUT
     )
+    @ResponseBody
     public boolean addFavourite(long token, long aid) {
         Integer uid = this.accessAffair(token);
         if (uid == null || !isUniqueAid(aid)) {
@@ -355,6 +375,7 @@ public class ClientController {
         params = {"token", "aid"},
         method = RequestMethod.DELETE
     )
+    @ResponseBody
     public boolean removeFavourite(long token, long aid) {
         Integer uid = this.accessAffair(token);
         if (uid == null || !isUniqueAid(aid)) {
@@ -373,6 +394,7 @@ public class ClientController {
         params = {"token"},
         method = RequestMethod.DELETE
     )
+    @ResponseBody
     public List<Estate> userFavourite(long token) {
         Integer uid = this.accessAffair(token);
         if (uid == null) {
@@ -386,6 +408,7 @@ public class ClientController {
         params = {"aid"},
         method = RequestMethod.DELETE
     )
+    @ResponseBody
     public int estateFavourite(long aid) {
         return this.favouriteService.query(aid);
     }

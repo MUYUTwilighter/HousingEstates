@@ -16,7 +16,4 @@ public interface FavouriteDao extends JpaRepository<Favourite, Integer> {
 
     @Query(value = "select * from favourite where aid = ?1 and uid = ?2", nativeQuery = true)
     Favourite query(int uid, long aid);
-
-    @Query(value = "delete from favourite where aid = ?1 and uid = ?2", nativeQuery = true)
-    void remove(long aid, int uid);
 }

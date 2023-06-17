@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long register(String name, String pwd, String email) {
-        if (dao.queryHiddenByEmail(email) != null) {
+        if (dao.queryByEmail(email) != null) {
             return null;
         }
         User user = new User();
@@ -94,12 +94,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User find(int id) {
-        return this.dao.queryHiddenById(id);
+        User user = this.dao.queryById(id);
+        user.setPassword(null);
+        return user;
     }
 
     @Override
     public List<User> find(String name) {
-        return this.dao.queryHiddenByName(name);
+        List<User> users = this.dao.queryByName(name);
+        for (User user : users) {
+            user.setPassword(null);
+        }
+        return users;
     }
 
     @Override
