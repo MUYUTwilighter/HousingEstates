@@ -1,0 +1,21 @@
+server:
+  port: 25565
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost/housing?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai"
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+    username: "housing"
+    password: "housing"
+  jpa:
+    database: "MySQL"
+    database-platform: "org.hibernate.dialect.MySQLDialect"
+    show-sql: true
+    hibernate:
+      ddl-auto: "update"
+  mail:
+    protocol: "smtp"
+    host: "smtp.163.com"
+    port: 587
+    username: "example@163.com"
+    password: "example-authentication"
+    default-encoding: "UTF-8"

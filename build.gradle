@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.6'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'cool.muyucloud'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA
+    implementation 'org.springframework.boot:spring-boot-starter-parent:2.7.8'
+    implementation 'org.springframework.boot:spring-boot-starter-web'   // Tomcat web
+    implementation 'org.springframework.boot:spring-boot-starter-mail'  // Spring boot email
+    implementation 'mysql:mysql-connector-java:8.0.33'  // MSSQL Driver
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'  // Mybatis
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA
+    testImplementation 'org.springframework.boot:spring-boot-starter-parent:2.7.8'
+    testImplementation 'org.springframework.boot:spring-boot-starter-web'   // Tomcat web
+    testImplementation 'mysql:mysql-connector-java:8.0.33'  // MSSQL Driver
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-mail'  // Spring boot email
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
