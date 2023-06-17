@@ -16,6 +16,6 @@ spring:
     protocol: "smtp"
     host: "smtp.163.com"
     port: 587
-    username: "example@163.com"
-    password: "example-authentication"
+#    username: "example@163.com"
+#    password: "example-authentication"
     default-encoding: "UTF-8"
