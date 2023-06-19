@@ -1,6 +1,5 @@
 package cool.muyucloud.housing.controller;
 
-import cool.muyucloud.housing.entity.AddressId;
 import cool.muyucloud.housing.entity.User;
 import cool.muyucloud.housing.service.AddressIdService;
 import cool.muyucloud.housing.service.UserService;
